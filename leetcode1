@@ -15,13 +15,12 @@ class Solution {
 
                     int[] a = {i,j};
                     return a;
-                    
+
                 }
             }
         }
         return new int[2];
-        
+
     }
 }
-//I add some testing code
-
+//I add some testing code ,edit by atom
