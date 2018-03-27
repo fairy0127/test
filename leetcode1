@@ -12,7 +12,7 @@ class Solution {
 
                 if((nums[i] + nums[j]) == target)
                 {
-
+cdvb5rdfgb4rt2s34rcbkovb,tmt0v9 4 
                     int[] a = {i,j};
                     return a;
 
