@@ -1,0 +1,177 @@
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int a = 0;
+        ListNode result= new ListNode(0);
+        ListNode temp;
+        ListNode add1 = l1;
+        ListNode add2 = l2;
+       // result.next = new ListNode(0);
+        temp = result;
+        
+        int a1 = 0;
+        int a2 = 0;
+        while(add1!=null)
+        {
+
+            a1++;
+            add1 = add1.next;
+        }
+        
+        while(add2 != null)
+        {
+
+            a2++;
+            add2 = add2.next;
+        }
+
+        if(a1>= a2)
+        {
+
+            add1 = l1;
+            add2 = l2;
+        }
+        else
+        {
+
+            add1 = l2;
+            add2 = l1;
+        }
+        int val2 = 0;
+        
+        while(add1 != null)
+        {
+            if(add1.next != null)
+            {
+               temp.next = new ListNode(0); 
+            }
+            if(add2 != null)
+                val2 = add2.val;
+            
+            temp.val = add1.val + val2 + a;
+            if(temp.val >= 10)
+            {
+                temp.val = temp.val-10;
+                a = 1;
+                if(temp.next == null)
+                {
+
+                    temp.next = new ListNode(1);
+                }
+            }
+            else
+            {
+                a=0;
+            }
+
+
+            temp = temp.next;
+            add1 = add1.next;
+            if(add2 != null && add2.next != null)
+            {
+                add2 = add2.next;
+            }
+            else
+            {
+                add2 = null;
+                val2 =0;
+            }
+            
+            
+            
+        }
+        
+       /* add1 = l1;
+        add2 = l2;
+        int val2 = 0;
+        if(a1 >= a2)
+        {
+        while(add1 != null)
+        {
+            if(add1.next != null)
+            {
+               temp.next = new ListNode(0); 
+            }
+            if(add2 != null)
+                val2 = add2.val;
+            
+            temp.val = add1.val + val2 + a;
+            if(temp.val >= 10)
+            {
+                temp.val = temp.val-10;
+                a = 1;
+                if(temp.next == null)
+                {
+
+                    temp.next = new ListNode(1);
+                }
+            }
+            else
+            {
+                a=0;
+            }
+
+
+            temp = temp.next;
+            add1 = add1.next;
+            if(add2 != null && add2.next != null)
+            {
+                add2 = add2.next;
+            }
+            else
+            {
+                add2 = null;
+                val2 =0;
+            }
+            
+            
+            
+        }
+    }
+        else
+        {
+            while(add2 != null)
+            {
+                if(add2.next != null)
+                {
+                   temp.next = new ListNode(0); 
+                }
+                if(add1 != null)
+                    val2 = add1.val;
+
+                temp.val = add2.val + val2 + a;
+                if(temp.val >= 10)
+                {
+                    temp.val = temp.val-10;
+                    a = 1;
+                    if(temp.next == null)
+                    {
+
+                        temp.next = new ListNode(1);
+                    }
+                }
+                else
+                {
+                    a=0;
+                }
+
+
+                temp = temp.next;
+                add2 = add2.next;
+                if(add1 != null && add1.next != null)
+                {
+                    add1 = add1.next;
+                }
+                else
+                {
+                    add1 = null;
+                    val2=0;
+                }
+
+
+
+            }
+        }*/
+        return result;
+        
+    }
+}
