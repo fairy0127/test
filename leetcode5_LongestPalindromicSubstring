@@ -1,0 +1,151 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        Set<String> strHash = new HashSet<String>();
+       // int i=0, j=0;
+        int len = s.length();
+        String maxStr = "";
+       // System.out.print(s.substring(3,8)+"\n");
+       // String nStr = s.substring(3, s.length()-3);
+       // len = nStr.length();
+        String nStr = s;
+        /*while(i<len && j<len)
+        {
+           //t System.out.println("i:" + i + " j:" + j);
+            if(strHash.contains(String.valueOf(nStr.charAt(j))))
+            {
+
+                String tempStr = nStr.substring(i, j+1);
+                System.out.print(tempStr + "\n");
+                if(tempStr.startsWith(String.valueOf(nStr.charAt(j))))
+                {
+                    if(tempStr.length()>maxStr.length())
+                    {
+                        maxStr = tempStr;
+                        System.out.println("maxStr:"+maxStr);
+                    }
+                    if(nStr.charAt(j) == nStr.charAt(i))
+                    {
+                        strHash.add(String.valueOf(nStr.charAt(j++)));
+                    }
+                    else
+                    {
+                        strHash.remove(String.valueOf(nStr.charAt(i++)));
+                    }
+                }
+                else
+                {
+                    strHash.remove(String.valueOf(nStr.charAt(i++)));
+                }
+
+
+
+            }
+            else
+            {
+                strHash.add(String.valueOf(nStr.charAt(j++)));
+
+
+            }
+        }*/
+       /* for(int i=0; i<len; i++)
+        {
+            String subStr = s.substring(0, i+1);
+            char tempChar = s.charAt(i);
+            if(strHash.contains(String.valueOf(tempChar)))
+            {
+                int tempIndex = subStr.indexOf(String.valueOf(tempChar));
+               // if(maxStr.length() > (i-tempIndex+1))
+                //    break;
+                while(tempIndex <i)
+                {
+                    String tempStr = subStr.substring(tempIndex);
+                    boolean sign = false;
+                    for(int j=0; j<tempStr.length()/2;j++)
+                    {
+                        if(tempStr.charAt(j) != tempStr.charAt(tempStr.length()-j-1))
+                        {
+                            sign = false;
+                            break;
+                        }
+                        else
+                        {
+                            sign = true;
+
+                        }
+
+                    }
+                    if((i-tempIndex+1)>maxStr.length() && sign == true)
+                    {
+                        maxStr =  s.substring(tempIndex, i+1);
+                    }
+                    tempIndex = subStr.indexOf(String.valueOf(tempChar), tempIndex+1);
+
+                }
+
+
+            }
+            strHash.add(String.valueOf(tempChar));
+        }
+        if(maxStr.length()==0)
+            return String.valueOf(s.charAt(0));*/
+        /*else if(maxStr.length() == len)
+        {
+            if(maxStr.contains(String.valueOf(s.charAt(0))+String.valueOf(s.charAt(0))))
+                return maxStr;
+            else
+                return String.valueOf(s.charAt(0));
+        }*/
+        for(int i=len-1; i>= 0; i--)
+        {
+
+            String subStr = s.substring(0, i+1);
+            char tempChar = s.charAt(i);
+            strHash.add(String.valueOf(tempChar));
+            //System.out.println("subStr:"+subStr);
+           // System.out.println("tempChar:" + String.valueOf(tempChar));
+            if(strHash.contains(String.valueOf(tempChar)))
+            {
+                int tempIndex = subStr.indexOf(String.valueOf(tempChar));
+               // System.out.println("tempIndex:" + tempIndex);
+                if(maxStr.length() >= (len/2+1))
+                    break;
+                while(tempIndex <i)
+                {
+                    String tempStr = subStr.substring(tempIndex);
+                    boolean sign = false;
+                   // System.out.println("tempStr:" + tempStr);
+                    for(int j=0; j<tempStr.length()/2;j++)
+                    {
+                        if(tempStr.charAt(j) != tempStr.charAt(tempStr.length()-j-1))
+                        {
+                            sign = false;
+                            break;
+                        }
+                        else
+                        {
+                            sign = true;
+
+                        }
+
+                    }
+                    if((i-tempIndex+1)>maxStr.length() && sign == true)
+                    {
+                        maxStr =  s.substring(tempIndex, i+1);
+                  //      System.out.println("maxStr:" + maxStr);
+                    }
+                    tempIndex = subStr.indexOf(String.valueOf(tempChar), tempIndex+1);
+
+                }
+
+
+            }
+
+        }
+        if(maxStr.length()==0)
+            return String.valueOf(s.charAt(0));
+
+
+        return maxStr;
+
+    }
+}
