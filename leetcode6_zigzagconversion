@@ -1,0 +1,48 @@
+class Solution {
+    public String convert(String s, int numRows) {
+        if(s.length() == 0)
+            return s;
+        if(numRows == 1)
+            return s;
+        if(s.length() <= numRows)
+            return s;
+        int cyc = 2*numRows -2;
+        String retStr = "";
+        int charPos = 0;
+        int cycSign = -1;
+
+        for(int i=0; i< numRows; i++)
+        {
+            charPos = 0;
+            //if(i+charPos < s.length())
+            //    retStr = retStr + String.valueOf(s.charAt(i+charPos));
+            charPos = charPos + i;
+
+            cycSign = -1;
+            while(charPos < s.length())
+            {
+                if(charPos < s.length())
+                    retStr = retStr + String.valueOf(s.charAt(charPos));
+                if(cycSign == -1)
+                {
+                    int mid = cyc-2*i;
+                    if(mid == 0)
+                        mid = cyc;
+                    charPos +=mid;
+                    cycSign = 1;
+                }
+                else
+                {
+                    int mid = 2*i;
+                    if(mid == 0)
+                        mid = cyc;
+                    charPos += mid;
+                    cycSign = -1;
+                }
+
+            }
+        }
+        return retStr;
+
+    }
+}
