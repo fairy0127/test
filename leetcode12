@@ -1,0 +1,23 @@
+class Solution {
+    public String intToRoman(int num) {
+        String[] thstrs = {"M","MM","MMM"};
+        String[] hstrs = {"C","CC","CCC","CD", "D","DC","DCC","DCCC","CM"};
+        String[] tstrs = {"X","XX","XXX","XL","L","LX","LXX","LXXX","XC"};
+        String[] strs = {"I","II","III","IV","V","VI","VII","VIII","IX"};
+        String ret = "";
+        int th = num/1000;
+        if(th !=0)
+            ret = ret + thstrs[th-1];
+        int h = num%1000/100;
+        if(h!=0)
+            ret = ret + hstrs[h-1];
+        int t = num%1000%100/10;
+        if(t!=0)
+            ret = ret + tstrs[t-1];
+        int s = num%1000%100%10;
+        if(s!=0)
+            ret = ret + strs[s-1];
+        return ret;
+
+    }
+}
