@@ -1,0 +1,198 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+
+        Set<Integer> iSet = new HashSet<Integer>();
+        Set<Integer> jSet = new HashSet<Integer>();
+        Set<Integer> subSet = new HashSet<Integer>();
+        Set<List<Integer>> testSet = new HashSet<List<Integer>>();
+        List<List<Integer>> ret = new ArrayList<>();
+
+        int test = 0;
+
+
+        for(int i=0; i< nums.length; i++)
+        {
+            if(!iSet.contains(nums[i]))
+            {
+                iSet.add(nums[i]);
+                jSet.clear();
+                subSet.clear();
+                for(int j=i+1; j<nums.length; j++)
+                {
+                    if(!jSet.contains(nums[j]))
+                    {
+                        jSet.add(nums[j]);
+                        List<Integer> aList = new ArrayList<>();
+                        List<Integer> bList = new ArrayList<>();
+                        aList.add(nums[i]);
+                        aList.add(nums[j]);
+                        bList.add(nums[j]);
+                        bList.add(nums[i]);
+                        if(!testSet.contains(aList))
+                        {
+                            if(!testSet.contains(bList))
+                            {
+
+                                testSet.add(aList);
+                                int sub = nums[i] + nums[j];
+
+                                if(!subSet.contains(sub))
+                                {
+                                    for(int k=j+1; k<nums.length;k++)
+                                    {
+                                        if(nums[i]+nums[j]+nums[k] == 0)
+                                        {
+                                            List<Integer> aNums = new ArrayList<>();
+                                            if(nums[i]<nums[j])
+                                            {
+                                                if(nums[i]<nums[k])
+                                                {
+                                                    if(nums[j]<nums[k])
+                                                    {
+                                                        aNums.add(nums[i]);
+                                                        aNums.add(nums[j]);
+                                                        aNums.add(nums[k]);
+
+                                                    }
+                                                    else
+                                                    {
+                                                        aNums.add(nums[i]);
+                                                        aNums.add(nums[k]);
+                                                        aNums.add(nums[j]);
+
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                        aNums.add(nums[k]);
+                                                        aNums.add(nums[i]);
+                                                        aNums.add(nums[j]);
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if(nums[i]>nums[k])
+                                                {
+                                                    if(nums[j]>nums[k])
+                                                    {
+                                                        aNums.add(nums[k]);
+                                                        aNums.add(nums[j]);
+                                                        aNums.add(nums[i]);
+                                                    }
+                                                    else
+                                                    {
+                                                        aNums.add(nums[j]);
+                                                        aNums.add(nums[k]);
+                                                        aNums.add(nums[i]);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                        aNums.add(nums[j]);
+                                                        aNums.add(nums[i]);
+                                                        aNums.add(nums[k]);
+                                                }
+                                            }
+
+                                            if(!ret.contains(aNums))
+                                            {
+                                                test = test+1;
+                                                System.out.println(test);
+                                                ret.add(aNums);
+                                            }
+
+                                            break;
+                                        }
+                                        else
+                                        {
+                                            subSet.add(nums[i] + nums[j]);
+                                        }
+
+                                    }
+
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        return ret;
+       /* List<List<Integer>> ret = new ArrayList<>();
+        for(int i=0; i< nums.length; i++)
+        {
+            for(int j=i+1; j<nums.length; j++)
+            {
+                for(int k=j+1; k<nums.length; k++)
+                {
+                    if(nums[i]+nums[j]+nums[k] == 0)
+                    {
+                        List<Integer> aNums = new ArrayList<>();
+                        if(nums[i]<nums[j])
+                        {
+                            if(nums[i]<nums[k])
+                            {
+                                if(nums[j]<nums[k])
+                                {
+                                    aNums.add(nums[i]);
+                                    aNums.add(nums[j]);
+                                    aNums.add(nums[k]);
+
+                                }
+                                else
+                                {
+                                    aNums.add(nums[i]);
+                                    aNums.add(nums[k]);
+                                    aNums.add(nums[j]);
+
+                                }
+
+                            }
+                            else
+                            {
+                                    aNums.add(nums[k]);
+                                    aNums.add(nums[i]);
+                                    aNums.add(nums[j]);
+
+                            }
+                        }
+                        else
+                        {
+                            if(nums[i]>nums[k])
+                            {
+                                if(nums[j]>nums[k])
+                                {
+                                    aNums.add(nums[k]);
+                                    aNums.add(nums[j]);
+                                    aNums.add(nums[i]);
+                                }
+                                else
+                                {
+                                    aNums.add(nums[j]);
+                                    aNums.add(nums[k]);
+                                    aNums.add(nums[i]);
+                                }
+                            }
+                            else
+                            {
+                                    aNums.add(nums[j]);
+                                    aNums.add(nums[i]);
+                                    aNums.add(nums[k]);
+                            }
+                        }
+
+                        if(!ret.contains(aNums))
+                            ret.add(aNums);
+                        break;
+                    }
+                }
+            }
+        }
+        return ret; */
+
+    }
+}
