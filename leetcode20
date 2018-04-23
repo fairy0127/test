@@ -1,0 +1,67 @@
+class Solution {
+    public boolean isValid(String s) {
+        List<String> leftStr = new ArrayList<>();
+        Set<String> leftCheck = new HashSet<String>();
+        Set<String> rightCheck = new HashSet<String>();
+
+        boolean ret = true;
+
+        leftCheck.add("(");
+        leftCheck.add("[");
+        leftCheck.add("{");
+        rightCheck.add(")");
+        rightCheck.add("]");
+        rightCheck.add("}");
+        for(int i=0; i< s.length(); i++)
+        {
+            String sStr = String.valueOf(s.charAt(i));
+            if(leftCheck.contains(sStr))
+            {
+                leftStr.add(sStr);
+            }
+            else if(rightCheck.contains(sStr))
+            {
+                if(leftStr.size()==0)
+                    return false;
+                if(sStr.equals(")"))
+                {
+                    if(leftStr.get(leftStr.size()-1).equals("("))
+                    {
+                        leftStr.remove(leftStr.size()-1);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if(sStr.equals("]"))
+                {
+                    if(leftStr.get(leftStr.size()-1).equals("["))
+                    {
+                        leftStr.remove(leftStr.size()-1);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                if(sStr.equals("}"))
+                {
+                    if(leftStr.get(leftStr.size()-1).equals("{"))
+                    {
+                        leftStr.remove(leftStr.size()-1);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+
+        }
+        if(leftStr.size()>0)
+            return false;
+
+        return true;
+    }
+}
