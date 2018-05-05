@@ -1,0 +1,85 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode point = head;
+        int count = 0;
+        ListNode ret = null;
+        ListNode beforNode = null;
+        if(head == null)
+            return null;
+        if(head.next == null)
+            return head;
+
+        while(point!=null)
+        {
+
+            if(count == 0)
+            {
+
+                    ListNode[] nodes = new ListNode[k+1];
+                    nodes[0] = point;
+                    for(int i=1;i<k+1;i++)
+                    {
+                        nodes[i] = null;
+                    }
+                    for(int i=1; i< k+1; i++)
+                    {
+
+                        if(nodes[i-1].next != null)
+                        {
+                            nodes[i] = nodes[i-1].next;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    if(nodes[k-1] == null)
+                        break;
+                    if(beforNode != null)
+                    {
+                        if(nodes[k-1] !=null)
+                            beforNode.next = nodes[k-1];
+                    }
+
+                    for(int i=k-1; i>0; i--)
+                    {
+                        if(nodes[i] == null)
+                            break;
+                        nodes[i].next = nodes[i-1];
+                    }
+                    beforNode = nodes[0];
+                    nodes[0].next = nodes[k];
+                    point = nodes[k-1];
+                    count = count + 1;
+                    if(ret == null)
+                        ret = nodes[k-1];
+
+
+            }
+             else if(count == k-1)
+             {
+                count = 0;
+             }
+            else
+            {
+                count = count+1;
+            }
+            if(point == null)
+                break;
+            point = point.next;
+
+        }
+        if(ret == null)
+            ret = head;
+        return ret;
+
+    }
+}
