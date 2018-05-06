@@ -1,0 +1,77 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        if(divisor == -2147483648 && dividend == -2147483648)
+            return 1;
+        if(divisor == -2147483648)
+            return 0;
+        int endSign = 1;
+        int sorSign = 1;
+        int end = dividend;
+        int sor = divisor;
+        int ret = 0;
+
+
+        if(dividend < 0)
+        {
+            endSign = -1;
+            end = -dividend;
+        }
+        if(divisor <0)
+        {
+           sorSign = -1;
+            sor = -divisor;
+        }
+        if(dividend == -2147483648)
+        {
+            endSign = -1;
+            end = 2147483647;
+            if(divisor == -1)
+            {
+                return end;
+
+            }
+            else if(divisor == 1)
+                return dividend;
+        }
+
+        if(sor == 1)
+        {
+            if(endSign + sorSign == 0)
+                return -end;
+            else
+                return end;
+        }
+        int sign = 1;
+        int endCnt = 0;
+        int sorCnt = 0;
+        int sorT = sor;
+        System.out.println(end);
+        while(end>=sor)
+        {
+            end = end - sor;
+            sor = sor +sorT;
+            sorCnt = sorCnt + 1;
+            ret = ret + sorCnt;
+            if(sor<0)
+                break;
+        }
+
+        System.out.println(ret);
+        //System.out.println(end);
+        if(dividend == -2147483648)
+            end = end+1;
+        while(end>=sorT)
+        {
+            end = end-sorT;
+            ret = ret+1;
+        }
+        if(endSign + sorSign == 0)
+        {
+            ret = -ret;
+        }
+        return ret;
+
+
+
+    }
+}
