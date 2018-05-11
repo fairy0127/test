@@ -1,0 +1,74 @@
+class Solution {
+    public int longestValidParentheses(String s) {
+        if(!s.contains(")"))
+            return 0;
+        int i=0;
+        int j=0;
+        int ret=0;
+        List<Integer> checkList = new ArrayList<Integer>();
+        while(i<s.length())
+        {
+           // System.out.println("i:"+i);
+            if(checkList.size()==0 && s.charAt(i)==')')
+            {
+                i++;
+                continue;
+            }
+            else
+            {
+                checkList.add(i);
+                j=i+1;
+            }
+            while((checkList.size() != 0 && j<s.length()) || ((j<s.length()) && s.charAt(j) != ')' ))
+            {
+               // System.out.println(j);
+                char checkChar = s.charAt(j);
+                if(checkChar == '(')
+                {
+                    checkList.add(j);
+                }
+                else
+                {
+                    if(checkList.size()!=0)
+                    {
+                       checkList.remove(checkList.size()-1);
+                    }
+                    if(checkList.size() ==0)
+                    {
+                        int cnt = j-i+1;
+                        if(cnt > ret)
+                            ret = cnt;
+                    }
+
+                }
+                j++;
+            }
+            if(checkList.size()==0)
+            {
+               // System.out.println("exist");
+                int cnt = j-i;
+                if(cnt == 1)
+                    cnt = 0;
+                if(cnt > ret)
+                    ret = cnt;
+                i = j;
+            }
+            else
+            {
+                Iterator it = checkList.iterator();
+                int checkPos = (int)it.next();
+                if(i == checkPos)
+                {
+                    i++;
+                }
+                else
+                    i = checkPos;
+            }
+            checkList.clear();
+
+
+        }
+        return ret;
+
+    }
+}
