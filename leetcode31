@@ -1,0 +1,60 @@
+class Solution {
+    public void nextPermutation(int[] nums) {
+        int numsi =-1;
+        int numsii = -1;
+        int numsj = -1;
+        for(int i=nums.length-1; i>0; i--)
+        {
+            if(nums[i-1]<nums[i])
+            {
+                numsi = i-1;
+                numsii = i;
+                break;
+
+
+            }
+        }
+        if(numsi == -1)
+        {
+            int[] temps = new int[nums.length];
+            for(int i = 0; i< nums.length; i++)
+            {
+                temps[i] = nums[i];
+            }
+            for(int i=0; i< nums.length; i++)
+            {
+                nums[i] = temps[nums.length-1-i];
+            }
+
+        }
+        else
+        {
+            for(int j=nums.length-1; j>numsi; j--)
+            {
+                if(nums[j]>nums[numsi])
+                {
+                    numsj = j;
+                    break;
+
+                }
+            }
+            int tempi = nums[numsi];
+            int tempj = nums[numsj];
+            nums[numsi] = tempj;
+            nums[numsj] = tempi;
+            int[] temps = new int[nums.length-numsii];
+            for(int i = 0; i< nums.length-numsii; i++)
+            {
+                temps[i] = nums[i+numsii];
+            }
+            for(int i=numsii; i< nums.length; i++)
+            {
+                System.out.println("nums:"+nums[i]);
+                nums[i] = temps[nums.length-1-i];
+
+                System.out.println("temps:"+temps[i-numsii]);
+            }
+
+        }
+
+    }
