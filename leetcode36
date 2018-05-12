@@ -1,0 +1,89 @@
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+        boolean ret = true;
+        for(int i=0; i< 9; i++)
+        {
+            List<String> lineCheck = fillArray();
+            for(int j=0; j< 9; j++)
+            {
+                if(board[i][j] != '.')
+                {
+                    if(lineCheck.contains(String.valueOf(board[i][j])))
+                    {
+                       // System.out.println("i:"+i+" j:"+j);
+
+                        lineCheck.remove(String.valueOf(board[i][j]));
+                    }
+                    else
+                    {
+                        ret = false;
+                        return ret;
+                    }
+                }
+
+            }
+        }
+        for(int i=0; i< 9; i++)
+        {
+            List<String> lineCheck = fillArray();
+            for(int j=0; j< 9; j++)
+            {
+                if(board[j][i] != '.')
+                {
+                    if(lineCheck.contains(String.valueOf(board[j][i])))
+                    {
+                        lineCheck.remove(String.valueOf(board[j][i]));
+                    }
+                    else
+                    {
+                        ret = false;
+                        return ret;
+                    }
+                }
+
+            }
+        }
+        int[] line = {0,3,6};
+        int[] column = {0,3,6};
+        for(int i=0; i<line.length;i++)
+        {
+            for(int j=0; j< column.length; j++)
+            {
+                List<String> check = fillArray();
+                for(int a=line[i]; a<line[i]+3;a++)
+                {
+
+                        for(int b=column[j]; b< column[j]+3;b++)
+                        {
+                            System.out.println("a:"+a + " b:" + b);
+                            if(board[a][b] != '.')
+                            {
+                                if(check.contains(String.valueOf(board[a][b])))
+                                {
+                                    check.remove(String.valueOf(board[a][b]));
+                                }
+                                else
+                                {
+                                    System.out.println(board[a][b]);
+                                    ret = false;
+                                    return ret;
+                                }
+                        }
+                    }
+
+                }
+            }
+        }
+        return ret;
+    }
+    public List<String> fillArray()
+    {
+        List<String> ret = new ArrayList<String>();
+        String numberStr = "123456789";
+        for(int i=0; i< 9; i++)
+        {
+            ret.add(numberStr.substring(i,i+1));
+        }
+        return ret;
+    }
+}
