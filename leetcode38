@@ -1,0 +1,60 @@
+class Solution {
+    public String countAndSay(int n) {
+        String ret = "";
+        ret = getN(n);
+        return ret;
+
+
+    }
+
+    public String getN(int n)
+    {
+        if(n==1)
+        {
+            return "1";
+        }
+        else
+        {
+            String csLast = getN(n-1);
+            String ret = "";
+
+            int cnt = 1;
+            int i=0;
+            int j=1;
+            String subString = "";
+            String lastString = csLast.substring(0,1);
+            while(j<csLast.length())
+            {
+                subString = csLast.substring(j, j+1);
+
+                lastString = csLast.substring(i,i+1);
+
+
+                if(lastString.equals(subString))
+                {
+                    cnt++;
+                }
+                else
+                {
+                    ret =  ret +cnt + lastString;
+                    cnt = 1;
+
+                }
+                i++;
+                j++;
+            }
+            if(ret.equals(""))
+            {
+                ret = cnt+lastString;
+            }
+            else
+            {
+                ret = ret+cnt+subString;
+            }
+
+            return ret;
+
+        }
+
+    }
+}
