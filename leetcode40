@@ -1,0 +1,133 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        int[] test = candidates;
+
+      //  int i=candidates.length-1;
+      //  int j=0;
+        int sign = -1;
+        Arrays.sort(test);
+        if(test[0]>target)
+            return ret;
+        for(int i=test.length-1; i>=0; i--)
+        {
+            if(test[i]<= target)
+            {
+                sign = i;
+                break;
+            }
+        }
+        if(sign == -1)
+        {
+            //ret = getNext(test, target);
+            return ret;
+        }
+        if(test[sign] == target)
+        {
+            List<Integer> equalItem = new ArrayList<Integer>();
+            equalItem.add(target);
+            if(!ret.contains(equalItem))
+            {
+                ret.add(equalItem);
+            }
+        }
+        if(sign == 0)
+        {
+          // continue;
+        }
+        else
+        {
+            int[] newCan = new int[sign+1];
+            for(int i=0; i<sign+1; i++)
+            {
+                newCan[i] = test[i];
+
+            }
+            List<List<Integer>> items = getNext(newCan, target);
+            for(int j=0; j<items.size(); j++)
+            {
+                if(!ret.contains(items.get(j)))
+                {
+                    ret.add(items.get(j));
+                }
+            }
+
+        }
+        return ret;
+
+
+
+
+    }
+    public List<List<Integer>> getNext(int[] candidates, int target)
+    {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        for(int i=candidates.length-1; i>=0; i--)
+        {
+            if(candidates[i] < target)
+            {
+                int newTarget = target-candidates[i];
+                int sign = -1;
+                for(int j=i-1; j>=0; j--)
+                {
+                    if(candidates[j] <= newTarget)
+                    {
+                        sign = j;
+                        break;
+                    }
+                }
+                if(sign == -1)
+                {
+                    continue;
+                }
+                if(candidates[sign] == newTarget)
+                {
+                    List<Integer> equalItem = new ArrayList<Integer>();
+                    equalItem.add(candidates[i]);
+                    equalItem.add(newTarget);
+                    Collections.sort(equalItem);
+                    if(!ret.contains(equalItem))
+                    {
+                        ret.add(equalItem);
+                    }
+                }
+                /*if(sign == 0)
+                {
+                    continue;
+                }*/
+                int[] newCan = new int[sign+1];
+                for(int a=0; a<sign+1; a++)
+                {
+                    newCan[a] = candidates[a];
+                }
+                List<List<Integer>> items = getNext(newCan, newTarget);
+                for(int ai=0; ai<items.size();ai++)
+                {
+                    List<Integer> item = items.get(ai);
+                    item.add(candidates[i]);
+                    Collections.sort(item);
+                    if(!ret.contains(item))
+                    {
+                        ret.add(item);
+                    }
+                }
+
+            }
+            else if(candidates[i] == target)
+            {
+                List<Integer> equalItem = new ArrayList<Integer>();
+                equalItem.add(target);
+                if(!ret.contains(equalItem))
+                {
+                    ret.add(equalItem);
+                }
+
+            }
+            else
+            {
+                break;
+            }
+        }
+        return ret;
+    }
+}
