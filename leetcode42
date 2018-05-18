@@ -1,0 +1,82 @@
+class Solution {
+    public int trap(int[] height) {
+        int ret = 0;
+        int i=0;
+        int firstHeigh = 0;
+        int minHeight = 0;
+        int minValue = 0;
+        int leftSide=0;
+        while(i<height.length-1)
+        {
+            if(height[i+1]>=height[i])
+            {
+               leftSide = i+1;
+
+                minValue = height[leftSide];
+
+                i++;
+            }
+            else
+            {
+
+                int rightSide = leftSide +1;
+                int secMax = 0;
+                int secIndex = 0;
+                while(rightSide<height.length)
+                {
+                    if(height[rightSide]<minValue)
+                    {
+                        minValue = height[rightSide];
+                        minHeight = rightSide;
+
+                    }
+                    if(height[rightSide]>=height[leftSide])
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        if(height[rightSide]>=secMax)
+                        {
+                            secMax = height[rightSide];
+                            secIndex = rightSide;
+                        }
+
+                    }
+
+                    rightSide++;
+
+                }
+                if(rightSide == height.length)
+                {
+                    if(secIndex != 0)
+                    {
+                        for(int cnt = leftSide+1; cnt<secIndex; cnt++)
+                        {
+                            ret =  ret + secMax-height[cnt];
+                        }
+
+                    }
+                    i=secIndex;
+                    leftSide = i;
+                    continue;
+                }
+                System.out.println("leftSide:" + leftSide+ " rightSide:" + rightSide);
+                int max = Math.min(height[leftSide], height[rightSide]);
+                for(int cnt = leftSide+1; cnt<rightSide; cnt++)
+                {
+                    ret =  ret + max-height[cnt];
+                }
+                i = rightSide;
+                leftSide = rightSide;
+                System.out.println("leftSide:" + leftSide);
+
+
+            }
+            System.out.println(i);
+
+        }
+        return ret;
+
+    }
+}
