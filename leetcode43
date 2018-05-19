@@ -1,0 +1,271 @@
+class Solution {
+    public String multiply(String num1, String num2) {
+        if(num1.equals("0")||num2.equals("0"))
+            return "0";
+        String ret = "";
+        String s1 = "0123456789";
+        String s2 = "0123456789";
+
+        List<List<String>> pairs = new ArrayList<List<String>>();
+        List<String> multiLists = new ArrayList<String>();
+
+        List<String> addLists = new ArrayList<String>();
+
+        for(int i=0; i<s1.length(); i++)
+        {
+            for(int j=0; j<s2.length(); j++)
+            {
+                List<String> pair = new ArrayList<String>();
+                pair.add(String.valueOf(i));
+                pair.add(String.valueOf(j));
+                pairs.add(pair);
+
+                multiLists.add(String.valueOf(i*j));
+                addLists.add(String.valueOf(i+j));
+
+            }
+        }
+        List<String> num1List = new ArrayList<String>();
+        List<String> num2List = new ArrayList<String>();
+
+        for(int i=0; i<num1.length();i++)
+        {
+            num1List.add(num1.substring(num1.length()-1-i,num1.length()-i));
+        }
+        for(int i=0; i<num2.length();i++)
+        {
+            num2List.add(num2.substring(num2.length()-1-i,num2.length()-i));
+        }
+
+        List<String> minList;
+        List<String> maxList;
+        if(num1List.size()>num2List.size())
+        {
+            maxList = num1List;
+            minList = num2List;
+        }
+        else
+        {
+            maxList = num2List;
+            minList = num1List;
+        }
+        List<List<String>> example = new ArrayList<List<String>>();
+        for(int i=0; i< s1.length(); i++)
+        {
+            List<String> result = new ArrayList<String>();
+            String pair1 = s1.substring(i, i+1);
+            String addon = "";
+
+            for(int j = 0;j<minList.size();j++)
+            {
+                String pair2 = minList.get(j);
+                List<String> pair = new ArrayList<String>();
+                pair.add(pair1);
+                pair.add(pair2);
+                if(pairs.contains(pair))
+                {
+                    int index = pairs.indexOf(pair);
+                    String multi = multiLists.get(index);
+                    if(multi.length() == 1)
+                    {
+                        if(addon.equals(""))
+                        {
+                            result.add(multi);
+                        }
+                        else
+                        {
+                            List<String> addPair = new ArrayList<String>();
+                            addPair.add(addon);
+                            addPair.add(multi);
+                            if(pairs.contains(addPair))
+                            {
+                                int aIndex = pairs.indexOf(addPair);
+                                String addr = addLists.get(aIndex);
+                                if(addr.length()==1)
+                                {
+                                    result.add(addr);
+                                    addon = "";
+                                }
+                                else
+                                {
+                                    result.add(addr.substring(1,2));
+                                    addon = addr.substring(0,1);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if(addon.equals(""))
+                        {
+                            result.add(multi.substring(1,2));
+                            addon = multi.substring(0,1);
+                        }
+                        else
+                        {
+                            List<String> addPair = new ArrayList<String>();
+                            addPair.add(addon);
+                            addPair.add(multi.substring(1,2));
+                            if(pairs.contains(addPair))
+                            {
+                                int aIndex = pairs.indexOf(addPair);
+                                String addr = addLists.get(aIndex);
+                                if(addr.length()==1)
+                                {
+                                    result.add(addr);
+                                    addon = multi.substring(0,1);
+                                }
+                                else
+                                {
+                                    result.add(addr.substring(1,2));
+                                    String addon1 = addr.substring(0,1);
+                                    String addon2 = multi.substring(0,1);
+                                    List<String> addonPair = new ArrayList<String>();
+                                    addonPair.add(addon1);
+                                    addonPair.add(addon2);
+                                    if(pairs.contains(addonPair))
+                                    {
+                                        int addonIndex = pairs.indexOf(addonPair);
+                                        addon = addLists.get(addonIndex);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+            if(!addon.equals(""))
+            {
+                result.add(addon);
+            }
+            example.add(result);
+        }
+
+        List<List<String>> multiResults = new ArrayList<List<String>>();
+
+        for(int i=0; i<maxList.size();i++)
+        {
+            String multiNum = maxList.get(i);
+          /*  if(multiNum.equals("0"))
+            {
+                continue;
+            }*/
+            int startIndex = i;
+            //System.out.println("multiNum:" + multiNum);
+            int exampleIndex = s1.indexOf(multiNum);
+           // System.out.println("exampleIndex:"+exampleIndex);
+            List<String> exampleItem = example.get(exampleIndex);
+           // String checkStr = "";
+            for(int j=0; j<exampleItem.size(); j++)
+            {
+                String addItem = exampleItem.get(j);
+                if(multiResults.size()<startIndex+j+1)
+                {
+                    List<String> newItem = new ArrayList<String>();
+                    multiResults.add(newItem);
+                }
+               // System.out.println("size:"+multiResults.size() + " check:"+startIndex+j);
+                List<String> addList = multiResults.get(startIndex+j);
+                addList.add(addItem);
+                //checkStr = checkStr + " " + addItem;
+            }
+            //System.out.println(checkStr);
+        }
+
+
+
+        if(multiResults.size() !=0)
+        {
+            for(int i=0; i< multiResults.size(); i++)
+            {
+                List<String> item = multiResults.get(i);
+                int addResult = 0;
+                for(int j=0; j<item.size();j++)
+                {
+                    String addItem = item.get(j);
+                    addResult = addResult + Integer.valueOf(addItem);
+                }
+                String pair1 = String.valueOf(addResult%10);
+                int ten = addResult%100/10;
+                int hundred = addResult/100;
+                if(ten!=0)
+                {
+                    if(multiResults.size()>i+1)
+                    {
+                        List<String> tenList = multiResults.get(i+1);
+                        tenList.add(String.valueOf(ten));
+                    }
+                    else
+                    {
+                        List<String> tenList = new ArrayList<String>();
+                        tenList.add(String.valueOf(ten));
+                        multiResults.add(tenList);
+                    }
+                }
+                if(hundred !=0)
+                {
+                    System.out.println("hundreds");
+                    if(multiResults.size()>i+2)
+                    {
+                        List<String> tenList = multiResults.get(i+2);
+                        tenList.add(String.valueOf(hundred));
+                    }
+                    else
+                    {
+                        List<String> tenList = new ArrayList<String>();
+                        tenList.add(String.valueOf(hundred));
+                        multiResults.add(tenList);
+                    }
+                }
+
+               /* String pair1 = item.get(0);
+                for(int j=1; j<item.size();j++)
+                {
+                    List<String> pair = new ArrayList<String>();
+                    pair.add(pair1);
+                    pair.add(item.get(j));
+                    if(pairs.contains(pair))
+                    {
+                        int index = pairs.indexOf(pair);
+                        String aresult = addLists.get(index);
+                        if(aresult.length() == 1)
+                        {
+                            pair1 = aresult;
+                        }
+                        else
+                        {
+                            pair1 = aresult.substring(1,2);
+                            if(multiResults.size()>i+1)
+                            {
+                                List<String> next = multiResults.get(i+1);
+                                next.add(aresult.substring(0,1));
+                            }
+                            else
+                            {
+                                List<String> next = new ArrayList<String>();
+                                next.add(aresult.substring(0,1));
+                                multiResults.add(next);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        System.out.println("no exist");
+                    }
+                }*/
+                ret = ret + pair1;
+            }
+        }
+        String retReverse = "";
+        for(int i=0; i< ret.length();i++)
+        {
+            retReverse = retReverse + ret.substring(ret.length()-1-i,ret.length()-i);
+        }
+
+
+        return retReverse;
+
+
+    }
+}
