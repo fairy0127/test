@@ -1,0 +1,36 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        int size = matrix.length;
+        //System.out.println(size);
+        int time = size/2;
+        int row=0;
+        int column = 0;
+        if(size%2 == 0)
+        {
+            row = column = size/2;
+        }
+        else
+        {
+            row = size/2+1;
+            column = size/2;
+        }
+        System.out.println("row:" + row + " column:"+ column);
+        for(int i=0; i< row; i++)
+        {
+            for(int j=0; j<column; j++)
+            {
+                int temp1 = matrix[i][j];
+                int temp2 = matrix[j][size-1-i];
+                int temp3 = matrix[size-1-i][size-1-j];
+                int temp4 = matrix[size-1-j][i];
+                matrix[i][j] = temp4;
+                matrix[j][size-1-i] = temp1;
+                matrix[size-1-i][size-1-j] = temp2;
+                matrix[size-1-j][i] = temp3;
+
+            }
+
+        }
+
+    }
+}
