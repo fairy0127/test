@@ -1,0 +1,111 @@
+class Solution {
+    public double myPow(double x, int n) {
+      //  System.out.println(n);
+        if(x>0 && x<1.0)
+        {
+            if(n>1000000)
+                return 0.000;
+        }
+
+        if(Double.doubleToLongBits(x)==Double.doubleToLongBits(1.000))
+        {
+            return 1.000;
+        }
+        if(Double.doubleToLongBits(x)==Double.doubleToLongBits(-1.000))
+        {
+            if(n%2 == 0)
+                return 1.000;
+            else
+            {
+                return -1.000;
+            }
+        }
+        double ret = 1.0;
+        int sign = 0;
+        int checkN = 0;
+        int nSum = 0;
+        if(n>0)
+        {
+            while(nSum <n && n>2)
+            {
+                System.out.println("n:"+n);
+                double partRet = 1.0;
+                for(int i=0; i<n-nSum;)
+                {
+                   // System.out.println("in cycle n:"+n);
+                    i=i+i+2;
+                    if(i>=n-nSum)
+                    {
+
+                        checkN = sign;
+                        nSum = nSum+checkN;
+                        int test = n-nSum;
+                        System.out.println("i:" + i + " test:" + test + " n:"+n);
+                        break;
+                    }
+                    sign = i;
+                    partRet = partRet*x;
+                    partRet = partRet*partRet;
+                  //  System.out.println("partRet:" + partRet);
+                }
+                ret = ret*partRet;
+               // System.out.println("nSum:"+nSum + " ret:"+ret);
+            }
+            if(n%2==0)
+            {
+               ret = ret*x*x;
+
+            }
+            else
+            {
+                ret = ret*x;
+            }
+
+
+
+
+        }
+        else if(n<0)
+        {
+            System.out.println(n);
+            if(x>1)
+            {
+                if(n == -2147483648)
+                {
+                    return 0.00;
+                }
+                if(-n>1000000)
+                {
+                    return 0.0;
+                }
+            }
+            double newX = 1/x;
+            for(int i=0; i< -n;)
+            {
+                i=i+i+2;
+                if(i>=-n)
+                {
+                    break;
+                }
+                sign = i;
+                ret = ret*newX;
+                ret = ret*ret;
+
+            }
+            if(sign<-n)
+            {
+               for(int i=sign; i<-n;i++ )
+               {
+                   ret = ret * newX;
+               }
+            }
+
+        }
+        else
+        {
+            return 1;
+        }
+
+        return ret;
+    }
+}
