@@ -1,0 +1,32 @@
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<String> checkList = new ArrayList<String>();
+        List<List<String>> ret = new ArrayList<List<String>>();
+
+        for(int i=0; i< strs.length; i++)
+        {
+            String checkString = getCheckString(strs[i]);
+            if(checkList.contains(checkString))
+            {
+                int checkIndex = checkList.indexOf(checkString);
+                List<String> strList = ret.get(checkIndex);
+                strList.add(strs[i]);
+            }
+            else
+            {
+                checkList.add(getCheckString(strs[i]));
+                List<String> newItem = new ArrayList<String>();
+                newItem.add(strs[i]);
+                ret.add(newItem);
+            }
+        }
+        return ret;
+
+    }
+    public String getCheckString(String str)
+    {
+        char[] getChar = str.toCharArray();
+        Arrays.sort(getChar);
+        return new String(getChar);
+    }
+}
