@@ -1,0 +1,190 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        if(nums.length == 0)
+            return false;
+        if(nums[0] == 0 && nums.length != 1)
+            return false;
+        if(nums[0] == 0 && nums.length == 1)
+            return true;
+        boolean ret = true;
+      //  ret = subJump(nums);
+        int i=0;
+        while(i<nums.length)
+        {
+            if(nums[i]>0)
+            {
+                i++;
+            }
+            else
+            {
+                int j=i-1;
+                boolean checkZero = false;
+                while(j>=0)
+                {
+                    if(j+nums[j]>=nums.length-1)
+                        return true;
+                    for(int k = i+1; k<=j+nums[j];k++)
+                    {
+                        if(nums[k]>0)
+                        {
+                            checkZero = true;
+                            break;
+                        }
+                    }
+                    if(checkZero)
+                    {
+                        i++;
+                        break;
+                    }
+                    j--;
+                }
+                if(!checkZero)
+                {
+                    return false;
+                }
+            }
+        }
+        return ret;
+    }
+
+
+    public boolean subJump(int[] nums)
+    {
+        boolean ret = false;
+        int checkIndex = -1;
+        for(int i=0; i< nums.length; i++)
+        {
+            if(nums[i]==0)
+            {
+                checkIndex = i;
+                break;
+            }
+        }
+        if(checkIndex == -1)
+        {
+            ret = true;
+
+        }
+        else
+        {
+            for(int i=0; i< checkIndex; i++)
+            {
+                System.out.println("nums[i]:" + nums[i] + " length:" + nums.length + " i:" + i);
+                if(nums[i]>=nums.length-i-1)
+                {
+                    return true;
+                }
+                else if(i+nums[i] <= checkIndex)
+                {
+                    ret = false;
+                }
+                else
+                {
+                   int num2 =  nums[i+nums[i]];
+                    if(num2==0)
+                    {
+                        int test = i+nums[i];
+                        System.out.println("test:" + test);
+                        boolean out = false;
+                        for(int k=i+1;k<i+nums[i];k++)
+                        {
+                            if(nums[k]+k >= nums.length-1)
+                                return true;
+                            if((nums[k]+k>(i+nums[i]))&&(nums[k+nums[k]]!=0))
+                            {
+                                out = true;
+                                break;
+                            }
+                        }
+                        if(!out)
+                            return false;
+                        int jumpSign = -1;
+                        //for(int k= checkIndex+1; k<i+nums[i];k++)
+                        for(int k= i+nums[i] + 1; k<nums.length;k++)
+                        {
+                            if(nums[k] != 0)
+                            {
+                                jumpSign = k;
+                                break;
+                            }
+                        }
+                        if(jumpSign == -1)
+                            return false;
+                        int[] newNums = new int[nums.length-jumpSign];
+                        for(int j=0; j<newNums.length; j++)
+                        {
+                            newNums[j] = nums[jumpSign+j];
+                        }
+                        ret = subJump(newNums);
+                        if(ret)
+                        {
+                            return ret;
+                        }
+                    }
+                    else
+                    {
+                        //int[] newNums;
+                        int jumpSign = -1;
+                        for(int a=checkIndex + 1; a<nums.length; a++)
+                        {
+                            if(nums[a] != 0)
+                            {
+                                jumpSign = a;
+                                break;
+                            }
+                        }
+                        if(jumpSign == -1)
+                            return false;
+                       // newNums = Arrays.copyOfRange(nums,jumpSign,nums.length-1);
+                        int[] newNums = new int[nums.length-jumpSign];
+                for(int j=0; j<newNums.length; j++)
+                {
+                    newNums[j] = nums[jumpSign+j];
+                }
+                        ret = subJump(newNums);
+                        if(ret)
+                        {
+                            return ret;
+                        }
+
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    public boolean subJump0(int[] nums)
+    {
+        if(nums[0]>=nums.length-1)
+        {
+            System.out.println(nums[0]);
+            System.out.println(nums.length);
+            return true;
+        }
+        else if(nums[0] == 0)
+        {
+            return false;
+        }
+        else
+        {
+            for(int i=nums[0]; i>= 1; i--)
+            {
+                /*int[] newNums = new int[nums.length-i];
+                for(int j=0; j<newNums.length; j++)
+                {
+                    newNums[j] = nums[i+j];
+                }*/
+                int[] newNums;
+                newNums = Arrays.copyOfRange(nums,i,nums.length);
+                boolean ret = subJump0(newNums);
+                if(ret)
+                {
+                    System.out.println("it is true;");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
