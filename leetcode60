@@ -1,0 +1,85 @@
+class Solution {
+    public String getPermutation(int n, int k) {
+        List<Integer> list = new ArrayList<Integer>();
+        for(int i=1; i<= n; i++)
+        {
+            list.add(i);
+        }
+
+        String ret = "";
+        ret = getNPermutation(list, n, k);
+        return ret;
+
+
+    }
+    public String getNPermutation(List<Integer> list, int n, int k)
+    {
+        String ret = "";
+
+        if(k==1)
+        {
+            for(int i=0; i< list.size();i++)
+            {
+               ret = ret + String.valueOf(list.get(i));
+            }
+            return ret;
+        }
+        if(list.size()==1)
+            return String.valueOf(list.get(0));
+
+        int mul = 1;
+        int cnt = 1;
+        while(mul<k)
+        {
+            cnt++;
+            mul = mul*cnt;
+
+
+        }
+        if(n-cnt>0)
+        {
+           for(int i=0; i< n-cnt; i++)
+           {
+               ret = ret + String.valueOf(list.get(0));
+               list.remove(0);
+           }
+        }
+        mul = mul/cnt;
+        if(k%mul == 0)
+        {
+            System.out.println("k%mul==0 k:"+k + " mul:" + mul);
+            int index = k/mul;
+            ret = ret + String.valueOf(list.get(index-1));
+            list.remove(index-1);
+            for(int i=list.size()-1; i>=0;i--)
+            {
+                ret = ret + String.valueOf(list.get(i));
+            }
+            return ret;
+        }
+        else
+        {
+        int index = k/mul;
+        System.out.println("k:"+k + " mul:" + mul);
+        if(list.size() != 0)
+        {
+            if(index == list.size())
+            {
+                for(int i= list.size()-1;i>=0;i--)
+                {
+                    ret = ret + String.valueOf(list.get(i));
+                }
+                return ret;
+            }
+            ret = ret + String.valueOf(list.get(index));
+            list.remove(index);
+        }
+        }
+
+        System.out.println("ret:" + ret);
+        if(list.size() != 0)
+            ret = ret + getNPermutation(list,list.size(),k%mul);
+        return ret;
+
+    }
+}
