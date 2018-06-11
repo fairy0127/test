@@ -1,0 +1,84 @@
+class Solution {
+    public int uniquePaths(int m, int n) {
+       /* List<List<String>> retList = new ArrayList<List<String>>();
+        retList = getPath(m,n,m, n);
+        return retList.size();*/
+        List<Integer> result = new ArrayList<Integer>();
+        List<List<Integer>> value = new ArrayList<List<Integer>>();
+        return getPath2(m,n, value, result);
+
+    }
+    public int getPath2(int m, int n, List<List<Integer>> value, List<Integer> result)
+    {
+        List<Integer> item = new ArrayList<Integer>();
+        item.add(m);
+        item.add(n);
+        if(value.contains(item))
+        {
+            int index = value.indexOf(item);
+            return result.get(index);
+        }
+        int ret = 0;
+        if(m==1)
+            return 1;
+        if(n == 1)
+            return 1;
+        ret = getPath2(m-1, n, value, result) + getPath2(m,n-1, value, result);
+        System.out.println("m:"+m+" n:" + n+ " ret:" + ret);
+        if(!value.contains(item))
+        {
+            value.add(item);
+            result.add(ret);
+        }
+        return ret;
+    }
+    public List<List<String>> getPath(int mOriginal, int nOriginal,int m, int n)
+    {
+        List<List<String>> ret = new ArrayList<List<String>>();
+        if(m==1)
+        {
+            List<String> retColumn = new ArrayList<String>();
+            for(int i=0; i< n; i++)
+            {
+                retColumn.add(String.valueOf(m)+"," +String.valueOf(i));
+            }
+            ret.add(retColumn);
+            return ret;
+        }
+        else if(n==1)
+        {
+            List<String> retRow = new ArrayList<String>();
+            for(int i=0; i< m; i++)
+            {
+                retRow.add(String.valueOf(i) + "," +String.valueOf(n));
+            }
+            ret.add(retRow);
+            return ret;
+        }
+        List<List<String>> horizontal = getPath(mOriginal, nOriginal, m,n-1);
+        for(int i=0; i< horizontal.size(); i++)
+        {
+            List<String> item = new ArrayList<String>();
+            item.add(String.valueOf(mOriginal-m)+"," + String.valueOf(nOriginal-n));
+            List<String> h = horizontal.get(i);
+            for(int j=0; j<h.size();j++)
+            {
+                item.add(h.get(j));
+            }
+            ret.add(item);
+        }
+        List<List<String>> vertical = getPath(mOriginal, nOriginal, m-1,n);
+        for(int i=0; i< vertical.size(); i++)
+        {
+            List<String> item = new ArrayList<String>();
+            item.add(String.valueOf(mOriginal-m)+"," + String.valueOf(nOriginal-n));
+            List<String> v = vertical.get(i);
+            for(int j=0; j<v.size();j++)
+            {
+                item.add(v.get(j));
+            }
+            ret.add(item);
+        }
+        return ret;
+    }
+}
