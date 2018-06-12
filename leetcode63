@@ -1,0 +1,52 @@
+class Solution {
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        List<List<Integer>> values = new ArrayList<List<Integer>>();
+        List<Integer> results = new ArrayList<Integer>();
+        int ret = 0;
+        System.out.println("m:"+m + " n:" + n);
+        ret = getPaths(obstacleGrid, m, n, m, n,values, results);
+        return ret;
+
+    }
+    public int getPaths(int[][] board, int mOriginal, int nOriginal, int m, int n, List<List<Integer>> values, List<Integer> results)
+    {
+        int ret = 0;
+        int row = mOriginal-m;
+        int col = nOriginal - n;
+        List<Integer> item = new ArrayList<Integer>();
+        item.add(row);
+        item.add(col);
+        if(values.contains(item))
+        {
+            int index = values.indexOf(item);
+            return results.get(index);
+        }
+        System.out.println("row:" + row + " col:" + col + " value:" + board[row][col]);
+        if(board[row][col] == 0)
+        {
+            if(m>1&&n>=1)
+                ret = ret + getPaths(board, mOriginal, nOriginal, m-1,n,values, results);
+            if(m>=1&&n>1)
+                ret = ret + getPaths(board, mOriginal, nOriginal, m,n-1,values,results);
+            if(m==1&&n==1)
+                ret = 1;
+            if(!values.contains(item))
+            {
+                values.add(item);
+                results.add(ret);
+            }
+        }
+        else
+        {
+            if(!values.contains(item))
+            {
+                values.add(item);
+                results.add(0);
+            }
+            return 0;
+        }
+        return ret;
+    }
+}
