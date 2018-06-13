@@ -1,0 +1,40 @@
+class Solution {
+    public int[] plusOne(int[] digits) {
+        int[] ret = new int[digits.length+1];
+        int index = 1;
+        for(int i=digits.length-1; i>=0; i--)
+        {
+            int item = digits[i] + index;
+            if(item>=10)
+            {
+                ret[i] = item-10;
+                index = 1;
+            }
+            else
+            {
+                ret[i] = item;
+                index = 0;
+            }
+
+        }
+        if(index == 0)
+        {
+            int[] lessRet = new int[digits.length];
+            for(int i=0; i<digits.length;i++)
+            {
+                lessRet[i] = ret[i];
+            }
+            return lessRet;
+        }
+        else
+        {
+            for(int i=ret.length-1;i>0; i--)
+            {
+                ret[i] = ret[i-1];
+            }
+            ret[0] = index;
+            return ret;
+        }
+
+    }
+}
