@@ -1,0 +1,59 @@
+class Solution {
+    public String addBinary(String a, String b) {
+
+        String ret = "";
+        int aLen = a.length();
+        int bLen = b.length();
+        String a1 = a;
+        String b1 = b;
+        String sub0 = "";
+        int rest = Math.abs(aLen-bLen);
+        for(int i=0; i< rest; i++)
+        {
+            sub0 = sub0 + "0";
+        }
+
+        if(aLen>bLen)
+        {
+            b1 = sub0+b1;
+        }
+        if(aLen < bLen)
+        {
+            a1 = sub0 + a1;
+        }
+        sub0 = "0";
+        for(int i=a1.length()-1; i>=0;i--)
+        {
+            String a2 = a1.substring(i,i+1);
+            String b2 = b1.substring(i,i+1);
+            int item = Integer.valueOf(a2) + Integer.valueOf(b2) + Integer.valueOf(sub0);
+            switch(item)
+            {
+                case 0:
+                    ret = "0" + ret;
+                    sub0 = "0";
+                    break;
+                case 1:
+                    ret = "1" + ret;
+                    sub0 = "0";
+                    break;
+                case 2:
+                    ret = "0" + ret;
+                    sub0 = "1";
+                    break;
+                case 3:
+                    ret = "1" + ret;
+                    sub0="1";
+                    break;
+
+            }
+        }
+        if(sub0.equals("1"))
+        {
+            ret = "1"+ret;
+        }
+        return ret;
+
+
+    }
+}
