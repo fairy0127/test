@@ -1,0 +1,109 @@
+class Solution {
+    public List<String> fullJustify(String[] words, int maxWidth) {
+
+        List<String> ret = new ArrayList<String>();
+        int len = words.length;
+        int i=0;
+        int sum=0;
+        List<String> item = new ArrayList<String>();
+        while(i<words.length)
+        {
+            sum = sum + words[i].length()+1;
+            System.out.println("i:"+ words[i] + " sum:" + sum);
+            if(sum>maxWidth+1)
+            {
+                String retString = getString(item, maxWidth);
+                ret.add(retString);
+                item.clear();
+                sum = words[i].length()+1;
+                item.add(words[i]);
+                if(i==words.length-1)
+                {
+                    retString = getString(item, maxWidth);
+                    ret.add(retString);
+                }
+
+            }
+            else
+            {
+                item.add(words[i]);
+
+                if(i==words.length-1)
+                {
+                    String retString="";
+                    retString = getString(item, maxWidth);
+                    ret.add(retString);
+                }
+            }
+            i++;
+        }
+        String last = ret.get(ret.size()-1);
+        String[] lastStr = last.split(" ");
+
+        List<String> lastList = new ArrayList<String>();
+        for(int j=0; j<lastStr.length; j++)
+        {
+            if(!lastStr[j].equals(""))
+            {
+                lastList.add(lastStr[j]);
+                System.out.println(lastStr[j]);
+            }
+        }
+//        System.out.println(lastList.size());
+        last = "";
+        for(int j=0; j<lastList.size()-1;j++)
+        {
+            last = last + lastList.get(j)+" ";
+        }
+        last = last + lastList.get(lastList.size()-1);
+        int lastLen = last.length();
+        for(int j=0; j<maxWidth-lastLen; j++)
+        {
+            last = last + " ";
+        }
+        ret.set(ret.size()-1, last);
+        return ret;
+
+    }
+    public String getString(List<String> item, int max)
+    {
+        if(item.size()==0)
+            return "";
+
+        String ret = "";
+        if(item.size()==1)
+        {
+            int rest = max-item.get(0).length();
+            ret = item.get(0);
+            for(int i=0; i< rest;i++)
+            {
+                ret = ret + " ";
+
+            }
+            return ret;
+
+        }
+        int total=0;
+        for(int k=0; k<item.size();k++)
+        {
+            total = total + item.get(k).length();
+        }
+        int sub = max-total;
+        int i=0;
+        while(sub>0)
+        {
+            String strItem = item.get(i);
+            strItem = strItem + " ";
+            item.set(i,strItem);
+            i++;
+            if(i==item.size()-1)
+            {i = 0;}
+            sub--;
+        }
+        for(int j=0; j< item.size();j++)
+        {
+            ret = ret + item.get(j);
+        }
+        return ret;
+    }
+}
