@@ -1,0 +1,45 @@
+class Solution {
+    public String simplifyPath(String path) {
+        String ret="";
+
+        String[] pathItems = path.split("/");
+
+        if(pathItems.length==0)
+            return "/";
+        System.out.println(pathItems.length);
+        List<String> retPath = new ArrayList<String>();
+        for(int i=0; i<pathItems.length;i++)
+        {
+            if(pathItems[i].equals(""))
+            {
+                continue;
+            }
+            else if(pathItems[i].equals("."))
+            {
+                continue;
+            }
+            else if(pathItems[i].equals(".."))
+            {
+                if(retPath.size()!=0)
+                {
+                    int index = retPath.size()-1;
+                    retPath.remove(index);
+                }
+            }
+            else
+            {
+                String addItem = "/"+pathItems[i];
+                retPath.add(addItem);
+            }
+        }
+        for(int i=0; i< retPath.size();i++)
+        {
+            ret = ret + retPath.get(i);
+        }
+        if(ret.equals(""))
+        {
+            ret = "/";
+        }
+        return ret;
+    }
+}
