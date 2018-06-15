@@ -1,0 +1,58 @@
+class Solution {
+    public int climbStairs(int n) {
+        int ret = 0;
+        List<Integer> values = new ArrayList<Integer>();
+        List<Integer> results = new ArrayList<Integer>();
+        ret = getNums(n,values,results);
+        return ret;
+
+    }
+    public int getNums(int n,List<Integer> values, List<Integer> results)
+    {
+        int ret = 0;
+        if(n==1)
+        {
+            if(!values.contains(1))
+            {
+                values.add(1);
+                results.add(1);
+            }
+           return 1;
+        }
+
+        if(n==2)
+        {
+            if(!values.contains(1))
+            {
+                values.add(1);
+                results.add(1);
+            }
+           return 2;
+        }
+        if(values.contains(n-1))
+        {
+            int index = values.indexOf(n-1);
+            ret = ret + results.get(index);
+        }
+        else
+        {
+            ret = ret + getNums(n-1,values,results);
+        }
+        if(values.contains(n-2))
+        {
+            int index = values.indexOf(n-2);
+            ret = ret + results.get(index);
+        }
+        else
+        {
+            ret = ret + getNums(n-2,values,results);
+        }
+
+        if(!values.contains(n))
+        {
+            values.add(n);
+            results.add(ret);
+        }
+        return ret;
+    }
+}
