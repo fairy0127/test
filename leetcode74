@@ -1,0 +1,72 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        boolean ret = false;
+        int row = matrix.length;
+        if(row==0)
+        {
+            return false;
+        }
+        int col = matrix[0].length;
+        if(col == 0)
+        {
+            return false;
+        }
+        int targetRow = -1;
+        for(int i=0; i< row; i++)
+        {
+            if(matrix[i][0]<=target && matrix[i][col-1]>=target)
+            {
+                targetRow = i;
+                break;
+            }
+        }
+        if(targetRow == -1)
+        {
+            return ret;
+        }
+
+        int i=0;
+        int j=col-1;
+        if(i==j)
+        {
+            if(matrix[targetRow][i]==target)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        while(i<j)
+        {
+            int mid = (i+j)/2;
+            if(mid == i || mid == j)
+            {
+                if(matrix[targetRow][i]== target || matrix[targetRow][j]==target)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            if(matrix[targetRow][mid]==target)
+            {
+                return true;
+            }
+            else if(matrix[targetRow][mid]>target)
+            {
+                j = mid;
+            }
+            else
+            {
+                i=mid;
+            }
+
+        }
+        return ret;
+
+    }
+}
