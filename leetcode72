@@ -1,0 +1,187 @@
+class Solution {
+    public int minDistance(String word1, String word2) {
+
+
+        if(word1.length()==0 || word2.length()==0)
+        {
+            //System.out.println("what's matter?");
+            return word1.length()>word2.length()?word1.length():word2.length();
+        }
+
+        if(word1.equals(word2))
+            return 0;
+
+        int ret = 0;
+        int i1=0;
+        int i2=0;
+        while(i2<word2.length())
+        {
+            char check = word2.charAt(i2);
+            int checkRet  =0;
+            while(i1<word1.length())
+            {
+                char check2 = word1.charAt(i1);
+                if(check == check2)
+                {
+                    int before = i2>i1?i2:i1;
+                   // System.out.println("main " +word1.substring(i1+1, word1.length())+"  "+word2.substring(i2+1, word2.length()));
+                  //  System.out.println(before + " main char:" + check);
+                    checkRet = before  + getNext(word1.substring(i1+1, word1.length()), word2.substring(i2+1, word2.length()));
+                    break;
+                }
+                i1=i1+1;
+            }
+           // System.out.println("checkRet:" + checkRet);
+            if(ret==0)
+            {
+                ret = checkRet;
+            }
+            else
+            {
+                if(ret>checkRet&&checkRet!=0)
+                {
+
+                    ret = checkRet;
+                }
+
+            }
+            i2=i2+1;
+            i1=0;
+        }
+        if(ret ==0)
+        {
+            ret = word1.length()>word2.length()?word1.length():word2.length();
+        }
+        return ret;
+
+    }
+    public int getNext(String word1,String word2)
+    {
+        if(word1.length()==0 || word2.length()==0)
+        {
+          //  System.out.println("what's matter?");
+            return word1.length()>word2.length()?word1.length():word2.length();
+        }
+
+        if(word1.equals(word2))
+            return 0;
+
+        int ret = 0;
+        int i1=0;
+        int i2=0;
+        while(i2<word2.length())
+        {
+            char check = word2.charAt(i2);
+            int checkRet  =0;
+            while(i1<word1.length())
+            {
+                char check2 = word1.charAt(i1);
+                if(check == check2)
+                {
+                    int before = i2>i1?i2:i1;
+                    int j1 = i1+1;
+                    int j2 = i2+1;
+                    while(j1<word1.length()&&j2<word2.length())
+                    {
+                        if(word1.charAt(j1) == word2.charAt(j2))
+                        {
+                            j1++;
+                            j2++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                   // System.out.println("main " +word1.substring(i1+1, word1.length())+"  "+word2.substring(i2+1, word2.length()));
+                    //System.out.println(before + " main char:" + check);
+                    checkRet = before  + getNext(word1.substring(j1, word1.length()), word2.substring(j2, word2.length()));
+                    break;
+                }
+                i1=i1+1;
+            }
+          //  System.out.println("checkRet:" + checkRet);
+            if(ret==0)
+            {
+                ret = checkRet;
+            }
+            else
+            {
+                if(ret>checkRet&&checkRet!=0)
+                {
+
+                    ret = checkRet;
+                }
+
+            }
+            i2=i2+1;
+            i1=0;
+        }
+        if(ret ==0)
+        {
+            ret = word1.length()>word2.length()?word1.length():word2.length();
+        }
+        return ret;
+    }
+    public int getNext2(String word1, String word2)
+    {
+       // System.out.println("word1:"+word1 + " word2:" +word2);
+        if(word1.length()==0 || word2.length()==0)
+        {
+            System.out.println("what's matter?");
+            return word1.length()>word2.length()?word1.length():word2.length();
+        }
+
+        if(word1.equals(word2))
+            return 0;
+        int ret = 0;
+        int i1=0;
+        int i2=0;
+        boolean cut = false;
+        while(i2<word2.length())
+        {
+            char check = word2.charAt(i2);
+            while(i1<word1.length())
+            {
+                char check2 = word1.charAt(i1);
+                if(check == check2)
+                {
+                    int before = i2>i1?i2:i1;
+                    int j1 = i1+1;
+                    int j2 = i2+1;
+                    while(j1<word1.length()&&j2<word2.length())
+                    {
+                        if(word1.charAt(j1) == word2.charAt(j2))
+                        {
+                            j1++;
+                            j2++;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    //System.out.println("sub" +word1.substring(i1+1, word1.length())+"  "+word2.substring(i2+1, word2.length()));
+                   // System.out.println("sub:" + before+ " char:"+check);
+                    ret = before  + getNext(word1.substring(j1, word1.length()), word2.substring(j2, word2.length()));
+                    cut = true;
+                    break;
+                }
+                i1++;
+            }
+            if(cut)
+                break;
+           i2=i2+1;
+
+            i1=0;
+        }
+        if(ret ==0)
+        {
+            ret = word1.length()>word2.length()?word1.length():word2.length();
+            System.out.println("what:"+ret);
+        }
+        System.out.println("word1:"+word1 + " word2:" +word2 + " ret:" + ret);
+        return ret;
+
+    }
+}
