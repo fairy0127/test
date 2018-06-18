@@ -1,0 +1,51 @@
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        for(int i=1; i<=nums.length;i++)
+        {
+            ret.addAll(getCombination(nums, 0, nums.length-1, i));
+        }
+        ret.add(new ArrayList<Integer>());
+        return ret;
+
+    }
+    public List<List<Integer>> getCombination(int[] nums,int start, int end, int k)
+    {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        if(k==1)
+        {
+            for(int i=start; i<=end; i++)
+            {
+                List<Integer> item = new ArrayList<Integer>();
+                item.add(nums[i]);
+                ret.add(item);
+            }
+            return ret;
+        }
+
+        if(end-start+1 == k)
+        {
+            List<Integer> item = new ArrayList<Integer>();
+            for(int i=start; i<= end; i++)
+            {
+                item.add(nums[i]);
+            }
+            ret.add(item);
+            return ret;
+        }
+        for(int i=start; i<end-k+2; i++)
+        {
+
+            List<List<Integer>> itemList = getCombination(nums,i+1,end, k-1);
+            for( int j=0; j<itemList.size(); j++)
+            {
+                List<Integer> item = new ArrayList<Integer>();
+                item.add(nums[i]);
+                item.addAll(itemList.get(j));
+                ret.add(item);
+            }
+        }
+        return ret;
+    }
+
+}
