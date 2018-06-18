@@ -1,0 +1,46 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        ret = getCombination(1,n,k);
+        return ret;
+    }
+
+    public List<List<Integer>> getCombination(int start, int end, int k)
+    {
+        List<List<Integer>> ret = new ArrayList<List<Integer>>();
+        if(k==1)
+        {
+            for(int i=start; i<=end; i++)
+            {
+                List<Integer> item = new ArrayList<Integer>();
+                item.add(i);
+                ret.add(item);
+            }
+            return ret;
+        }
+
+        if(end-start+1 == k)
+        {
+            List<Integer> item = new ArrayList<Integer>();
+            for(int i=start; i<= end; i++)
+            {
+                item.add(i);
+            }
+            ret.add(item);
+            return ret;
+        }
+        for(int i=start; i<end-k+2; i++)
+        {
+
+            List<List<Integer>> itemList = getCombination(i+1,end, k-1);
+            for( int j=0; j<itemList.size(); j++)
+            {
+                List<Integer> item = new ArrayList<Integer>();
+                item.add(i);
+                item.addAll(itemList.get(j));
+                ret.add(item);
+            }
+        }
+        return ret;
+    }
+}
