@@ -1,0 +1,85 @@
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        boolean ret = false;
+        int row = board.length;
+        int col = board[0].length;
+       int[][] sign = new int[row][col];
+        for(int i=0; i< row; i++)
+        {
+            for(int j=0; j<col; j++)
+            {
+                sign[i][j] = -1;
+            }
+        }
+        for(int i=0; i< row; i++)
+        {
+            for(int j=0; j<col; j++)
+            {
+                ret = checkExist(board,sign,word, 0, i,j, i,j);
+                if(ret)
+                {
+                    return ret;
+                }
+            }
+        }
+        return ret;
+    }
+    public boolean checkExist(char[][] board,int[][] sign, String word, int index, int row, int col, int lastRow, int lastCol)
+    {
+
+        boolean ret = false;
+        int bRow = board.length;
+        int bCol = board[0].length;
+        int[][] sign2 = new int[bRow][bCol];
+        for(int i=0; i< bRow; i++)
+        {
+            for(int j=0; j< bCol; j++)
+            {
+                sign2[i][j] = sign[i][j];
+            }
+        }
+        if(word.length()-1 == index)
+        {
+            if(board[row][col] == word.charAt(index))
+                return true;
+            else
+                return false;
+        }
+      //  if((row == 0|| row == bRow-1 || col == 0||col==bCol-1)&&(word.length()-1>index && index >0))
+      //      return false;
+        if(board[row][col] == word.charAt(index))
+        {
+            sign2[row][col] = 1;
+           // System.out.println("row:"+row + " col:" + col + " lRow:" + lastRow + " lCol:" + lastCol);
+            //System.out.println(board[row][col]);
+            if(row-1>=0&&row-1 != lastRow && sign2[row-1][col]==-1)
+            {
+                ret = checkExist(board,sign2, word, index+1, row-1,col, row, col);
+                if(ret)
+                    return ret;
+            }
+            if(row+1<bRow&&row+1 != lastRow&& sign2[row+1][col]==-1)
+            {
+                ret = checkExist(board,sign2,word, index+1, row+1,col,row, col);
+                if(ret)
+                    return ret;
+            }
+            if(col+1<bCol&& col+1 != lastCol&& sign2[row][col+1]==-1)
+            {
+                ret = checkExist(board,sign2, word, index+1, row,col+1,row,col);
+                if(ret)
+                    return ret;
+            }
+            if(col-1>=0&& col-1 != lastCol&& sign2[row][col-1]==-1)
+            {
+                ret = checkExist(board,sign2,word, index+1, row,col-1,row,col);
+                if(ret)
+                    return ret;
+            }
+        }
+        else{
+            ret = false;
+        }
+        return ret;
+    }
+}
