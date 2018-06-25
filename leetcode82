@@ -1,0 +1,122 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null)
+            return head;
+        if(head.next == null)
+            return head;
+        ListNode h = head;
+        ListNode p = head;
+        int patch = head.val;
+        int check = head.val;
+        int cnt = 0;
+        ListNode ret = head;
+        if(head != null)
+        {
+            while(p!=null)
+            {
+                if(p.val != patch)
+                {
+                    if(p.val <patch)
+                    {
+                        patch = patch+2;
+                        break;
+                    }
+                    else if(p.val > patch)
+                    {
+                        patch = patch-2;
+                        break;
+                    }
+                }
+                p=p.next;
+            }
+            //patch = head.val-1;
+            check = patch;
+
+            if(patch == head.val && head.next != null)
+            {
+                return null;
+            }
+        }
+        p = head;
+        while(p.next != null)
+        {
+            System.out.println("p:" + p.val+ " check:"+check + " cnt:" + cnt);
+            if(p.val != check)
+            {
+
+                if(cnt >1)
+                {
+                    h.val = patch;
+
+
+                }
+
+                h = p;
+                check = h.val;
+                p = p.next;
+                cnt = 1;
+            }
+            else
+            {
+                cnt++;
+                p.val = patch;
+                p = p.next;
+            }
+            System.out.println("end cnt:" + cnt);
+        }
+        if(p.val == check)
+        {
+            h.val = patch;
+            p.val = patch;
+        }
+        else
+        {
+            if(cnt >1)
+                {
+                    h.val = patch;
+
+
+                }
+
+
+
+        }
+        p = head;
+        while(p.val == patch && p.next != null)
+        {
+            p = p.next;
+        }
+        if(p.val == patch && p.next ==null)
+        {
+            p = null;
+        }
+        ret = p;
+        while(p !=null && p.next != null)
+        {
+            if(p.next.val == patch)
+            {
+                if(p.next.next != null)
+                    p.next = p.next.next;
+                else
+                {
+                    p.next = null;
+                }
+            }
+            else
+            {
+               p = p.next;
+            }
+
+        }
+        return ret;
+
+    }
+}
