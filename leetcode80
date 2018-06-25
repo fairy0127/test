@@ -1,0 +1,37 @@
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length == 0)
+            return 0;
+        int patch = nums[0]-1;
+        int cnt = 0;
+        int compete = patch;
+        int ret = 0;
+        for(int i=0; i< nums.length; i++)
+        {
+            if(compete!= nums[i])
+            {
+                cnt = 1;
+                compete = nums[i];
+            }
+            else
+            {
+                cnt++;
+                if(cnt >2)
+                {
+                    nums[i] = patch;
+                }
+            }
+        }
+        for(int i=0; i< nums.length; i++)
+        {
+            if(nums[i] != patch)
+            {
+                nums[ret] = nums[i];
+               // System.out.println("nums[cnt]:" + nums[cnt] + " nums[i]:" + nums[i] + " cnt:" + cnt + " i:" + i);
+                ret++;
+            }
+        }
+        return ret;
+
+    }
+}
